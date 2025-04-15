@@ -12,9 +12,9 @@ import { useNavigate } from "react-router";
 
 
 function SignUp() {
-        let navigate = useNavigate();
-    
+    let navigate = useNavigate();
 
+    //this set when user enter exist user email 
     const checkError = useSelector(state => state.auth.error);
 
     const [data, setData] = useState({ name: "", email: "", mobile: "", password: "" });

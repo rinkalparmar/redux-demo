@@ -20,8 +20,7 @@ function NavbarMain() {
 
   const userInfo = JSON.parse(localStorage.getItem("userData"));
   const logindata = JSON.parse(localStorage.getItem("logindata"));
-  console.log("logindata", logindata);
-  console.log("userInfo", userInfo);
+
   const currentUser = userInfo.find((data) => { return data.email === logindata.email; });
   console.log("currentUser", currentUser);
 

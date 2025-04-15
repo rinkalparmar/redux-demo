@@ -15,6 +15,7 @@ function Login() {
     let navigate = useNavigate();
     const [input, setInput] = useState({ email: "", password: "" });
 
+    // if user not enter correct email and password then give error
     const checkError = useSelector(state => state.auth.error);
 
     const handleSubmit = (event) => {

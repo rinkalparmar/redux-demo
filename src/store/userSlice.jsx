@@ -1,10 +1,11 @@
 import { createSlice } from '@reduxjs/toolkit';
 
+// this used  to get data from localstorage and if not found then give empty array
 const exitsUsers = JSON.parse(localStorage.getItem("userData")) || [];
 
 const initialState = {
     users: exitsUsers,
-    isAuthenticate: false,
+    isAuthenticate: false,//it used when user enter correct data at login time then set true otherwise false
     error: null,
 };
 
