@@ -18,7 +18,6 @@ export const userSlice = createSlice({
             const { navigate, input } = action.payload;//input as key 
             const { email, password } = input;//here inside input key we take email,password as key
             const findUser = state.users.find((data) => { if (data.email === email && data.password === password) { return data; } });
-            console.log("findUser", findUser.email, findUser.password);
             if (!findUser) {
                 console.log("wrong email and password");
                 state.error = "wrong email and password";
@@ -29,13 +28,16 @@ export const userSlice = createSlice({
                 navigate("/home");
                 state.isAuthenticate = true;
                 localStorage.setItem("isAuthenticate", JSON.stringify(state.isAuthenticate));
+                localStorage.setItem("logindata", JSON.stringify(input));
             }
 
         },
-        logOutUser: (state, action) => {
+        // logOutUser: (state, action) => {
+        //     state.isAuthenticate = false;
+        //     localStorage.removeItem("isAuthenticate");
+        //     console.log("Logout Successfull");
 
-
-        },
+        // },
         signUpUser: (state, action) => {
             const newUser = action.payload;
             console.log("object", newUser);
