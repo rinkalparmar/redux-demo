@@ -1,21 +1,24 @@
 import React from 'react';
+import NavbarMain from './component/NavbarMain';
 import { Routes, Route } from "react-router-dom";
-import Home from './component2/Home';
-import Contact from './component2/Contact';
-import About from './component2/About';
-import Login from './component2/Login';
-import SignUp from './component2/SignUp';
-import MainData from './component2/MainData';
-import ProtectedRoute from './component2/ProtectedRoute';
+import Home from './component/Home';
+import Contact from './component/Contact';
+import About from './component/About';
+import Login from './component/Login';
+import SignUp from './component/SignUp';
+import MainData from './component/MainData';
+import ProtectedRoute from './component/ProtectedRoute';
 
 
 function App() {
-  const isAuthenticated = localStorage.getItem("logindata");
-  console.log("isAuthenticated", isAuthenticated);
+  let isAuthenticate = JSON.parse(localStorage.getItem("isAuthenticate"));
+  console.log("isAuthenticate===================", isAuthenticate);
   return (
     <>
 
       <Routes>
+
+
         <Route path="/" element={<Login />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<SignUp />} />
@@ -27,6 +30,8 @@ function App() {
             <Route path="/contact" element={<Contact />} />
           </Route>
         </Route>
+
+
       </Routes>
     </>
   );

@@ -56,6 +56,6 @@ export const userSlice = createSlice({
     }
 });
 
-console.log(userSlice.actions);
+// console.log(userSlice.actions);
 export const { loginUser, logOutUser, signUpUser } = userSlice.actions;
 export default userSlice;

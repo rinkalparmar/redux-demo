@@ -4,23 +4,35 @@ import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/esm/Col';
 import Container from 'react-bootstrap/esm/Container';
-import { useNavigate } from "react-router";
-import { useDispatch } from 'react-redux';
-import { loginUser } from '../store/userSlice';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { login, setErrors } from '../dataStore/authSlice';
+import { useNavigate } from 'react-router-dom';
+
 
 function Login() {
-    const dispatch = useDispatch();
-
-    let navigate = useNavigate();
+    const navigate = useNavigate();
     const [input, setInput] = useState({ email: "", password: "" });
 
-    // if user not enter correct email and password then give error
-    const checkError = useSelector(state => state.auth.error);
+    const dispatch = useDispatch();
+    const users = useSelector((state) => state.user.users);
+    const errors = useSelector((state) => state.user.errors);
+    console.log("users", users);
+    console.log("error", errors);
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        dispatch(loginUser({ input, navigate }));
+
+        // const { email, password } = input;
+        const findUser = users.find((user) => { return user.email === input.email && user.password === input.password; });
+        console.log("findUser", findUser);
+        if (!findUser) {
+            dispatch(setErrors("enter valide email and password"));
+            return;
+        }
+        dispatch(login(true));
+        localStorage.setItem("logindata", JSON.stringify(input));
+        navigate("/home");
+        dispatch(setErrors(null));
         setInput({ email: "", password: "" });
     };
 
@@ -39,7 +51,7 @@ function Login() {
                 <Row>
                     <Col>
                         <Form onSubmit={handleSubmit} style={{ width: "100%", maxWidth: '600px' }} className='p-4 shadow rounded bg-light'>
-                            {checkError && <div className="error">{checkError}</div>}
+                            {errors && <div className="error">{errors}</div>}
                             <h2>Login Form</h2>
                             <Row className="mb-3">
                                 <Form.Group md="4" >

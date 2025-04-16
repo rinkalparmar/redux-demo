@@ -4,24 +4,21 @@ import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import Container from 'react-bootstrap/esm/Container';
 import { useDispatch } from 'react-redux';
-import { signUpUser } from '../store/userSlice';
+import { signup, setErrors } from '../dataStore/authSlice';
 import { useSelector } from 'react-redux';
-// import { useNavigate } from "react-router";
-
 
 
 
 function SignUp() {
-    // let navigate = useNavigate();
-
-    //this set when user enter exist user email 
-    const checkError = useSelector(state => state.auth.error);
-
     const [data, setData] = useState({ name: "", email: "", mobile: "", password: "" });
+    const [error, setError] = useState("");
 
     const dispatch = useDispatch();
+    const users = useSelector((state) => state.user.users);
+    const errors = useSelector((state) => state.user.errors);
+    console.log("users", users);
+    console.log("error", errors);
 
-    const [error, setError] = useState("");
 
     const nameFormate = (name) => {
         return /^[a-zA-Z]+$/.test(name);
@@ -68,7 +65,15 @@ function SignUp() {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        dispatch(signUpUser(data));
+
+        const checkUser = users.find((user) => { if (user.email === data.email) { return user; } });
+        console.log("checkUser", checkUser);
+
+        if (checkUser) {
+            console.log("exits user");
+            dispatch(setErrors("user already exits with this email"));
+            return;
+        }
 
 
         const checkValidation = validation(data);
@@ -76,9 +81,11 @@ function SignUp() {
             return;
         }
 
-
+        const preData = [...users, data];//add user with exist user
+        dispatch(signup(preData));
         setData({ name: "", email: "", mobile: "", password: "" });
-
+        setError({});
+        dispatch(setErrors(null));
     };
 
 
@@ -93,7 +100,7 @@ function SignUp() {
         <>
             <Container fluid className="d-flex justify-content-center align-items-center" style={{ minHeight: '100vh' }}>
                 <Form onSubmit={handleSubmit} style={{ width: "100%", maxWidth: '600px' }} className='p-4 shadow rounded bg-light'>
-                    {checkError && <div className="error">{checkError}</div>}
+                    {errors && <div className='error'>{errors}</div>}
                     <h2 className='text-center'>Sign Up Form</h2>
                     <Row className="mb-3">
                         <Form.Group md="4" >

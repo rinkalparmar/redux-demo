@@ -16,7 +16,7 @@ function NavbarMain() {
     localStorage.removeItem("isAuthenticate");//this is rmove true when user clicked logout button
     navigate("/login");
   };
-
+  
 
   const userInfo = JSON.parse(localStorage.getItem("userData"));
   const logindata = JSON.parse(localStorage.getItem("logindata"));
