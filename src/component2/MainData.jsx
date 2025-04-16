@@ -1,10 +1,11 @@
 // components/AppLayout.js
 import React from 'react';
-import { Outlet } from 'react-router-dom';
+import { useNavigate, Outlet } from 'react-router-dom';
 import Sidebar from './Sidebar';
 import NavbarMain from './NavbarMain';
 
 const MainData = () => {
+    const navigate = useNavigate();
     return (
         <div className="d-flex " >
             <Sidebar />

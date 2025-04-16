@@ -7,11 +7,12 @@ import Login from './component2/Login';
 import SignUp from './component2/SignUp';
 import MainData from './component2/MainData';
 import ProtectedRoute from './component2/ProtectedRoute';
-
+import { useNavigate } from 'react-router-dom';
 
 function App() {
   const isAuthenticated = localStorage.getItem("logindata");
   console.log("isAuthenticated", isAuthenticated);
+  const navigate = useNavigate();
   return (
     <>
 
@@ -30,9 +31,10 @@ function App() {
             <Route path="/home" element={<Home />} />
             <Route path="/about" element={<About />} />
             <Route path="/contact" element={<Contact />} />
-            <Route path="/" element={<Navigate to="/home" />} />
-            <Route path="/login" element={<Navigate to="/home" />} />
-            <Route path="/signup" element={<Navigate to="/home" />} />
+            {/* <Route path="/" element={navigate("/home")} /> */}
+            {/* <Route path="/" element={<Navigate to="/home" />} /> */}
+            <Route path="*" element={<Navigate to={isAuthenticated ? "/home" : "/login"} />} />
+            {/* <Route path="/signup" element={<Navigate to="/home" />} /> */}
           </Route>
         </Route>
       </Routes >
