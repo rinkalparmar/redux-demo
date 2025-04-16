@@ -13,16 +13,26 @@ function NavbarMain() {
     let isAuthenticate = JSON.parse(localStorage.getItem("isAuthenticate"));
 
     const logout = () => {
+        // if(isAuthenticate){
+        //         navigate("/home")
+        // }
+        // else{
         localStorage.removeItem("isAuthenticate");//this is rmove true when user clicked logout button
+        localStorage.removeItem("logindata");//this is remove user data when user clicked logout button
         navigate("/login");
+        // }
     };
 
 
 
     const userInfo = JSON.parse(localStorage.getItem("userData"));
     const logindata = JSON.parse(localStorage.getItem("logindata"));
+    // when added question mark 
+    // logindata ? logindata?.email : ""
 
-    const currentUser = userInfo.find((data) => { return data.email === logindata.email; });
+    // without question mark
+    // logindata.email;
+    const currentUser = userInfo.find((data) => { return data.email === logindata?.email; });
     // console.log("currentUser", currentUser);
 
     return (
@@ -33,21 +43,17 @@ function NavbarMain() {
                 <Navbar.Collapse id="basic-navbar-nav" className='justify-content-end' >
 
                     {
-                        isAuthenticate ?
-                            <Dropdown>
-                                <Dropdown.Toggle id="dropdown-basic" variant='light' className='bg-light border-0'>
-                                    <MdAccountCircle style={{ height: "35px", width: "40px" }} />
-                                </Dropdown.Toggle>
-
-                                <Dropdown.Menu className='p-3 bg-light text-bold'>
-                                    <button className='btn btn-danger btn-sm'> <Dropdown.Item onClick={logout}>LogOut</Dropdown.Item></button>
-                                    <Dropdown.Item >hello {currentUser.name}</Dropdown.Item>
-                                    <Dropdown.Item >Something else</Dropdown.Item>
-                                </Dropdown.Menu>
-                            </Dropdown> : <>
-                                <Button variant="primary mx-4" onClick={() => navigate("/login")}>Login</Button>
-                                <Button variant="primary" onClick={() => navigate("/signup")}>SignUp</Button>
-                            </>
+                        isAuthenticate &&
+                        <Dropdown>
+                            <Dropdown.Toggle id="dropdown-basic" variant='light' className='bg-light border-0'>
+                                <MdAccountCircle style={{ height: "35px", width: "40px" }} />
+                            </Dropdown.Toggle>
+                            <Dropdown.Menu className='p-3 bg-light text-bold'>
+                                <button className='btn btn-danger btn-sm'> <Dropdown.Item onClick={logout}>LogOut</Dropdown.Item></button>
+                                <Dropdown.Item >hello {currentUser?.name}</Dropdown.Item>
+                                <Dropdown.Item >Something else</Dropdown.Item>
+                            </Dropdown.Menu>
+                        </Dropdown>
                     }
 
                 </Navbar.Collapse>
